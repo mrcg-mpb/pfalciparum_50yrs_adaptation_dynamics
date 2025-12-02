@@ -1,39 +1,25 @@
-## Major features of parasite adaptation revealed by genomes of Plasmodium falciparum population samples archived for over 50 years
-
-## 
+# Major features of parasite adaptation revealed by genomes of Plasmodium falciparum population samples archived for over 50 years
 
 ## Overview
-
-## 
-
-## This repository contains the data processing and analysis workflows for a genomic study of \*Plasmodium falciparum\* malaria parasites from archived placental blood samples collected in The Gambia between 1966 and 1971. The project investigates the evolutionary history of the parasite prior to widespread antimalarial drug pressure, identifying signatures of selection and temporal genomic changes over a ~50-year period.
-
-## 
+This repository contains the data processing and analysis workflows for a genomic study of \*Plasmodium falciparum\* malaria parasites from archived placental blood samples collected in The Gambia between 1966 and 1971. The project investigates the evolutionary history of the parasite prior to widespread antimalarial drug pressure, identifying signatures of selection and temporal genomic changes over a ~50-year period.
 
 ## **Key Findings:**
-
-## - No drug resistance alleles were detected in the historic (1966–1971) parasite population.
-
-## - Strong signatures of positive selection were identified at multiple loci, particularly in genes encoding surface proteins involved in erythrocyte binding and antibody recognition.
-
-## - Major allele frequency changes over 50 years were observed at loci including *gdv1* (sexual conversion regulation), *Pfsa1*, and *Pfsa3* (associated with sickle-cell trait infection).
-
-## - Historic infections showed high genomic complexity and were largely genetically unrelated.
-
-## 
+- No drug resistance alleles were detected in the historic (1966–1971) parasite population.
+- Strong signatures of positive selection were identified at multiple loci, particularly in genes encoding surface proteins involved in erythrocyte binding and antibody recognition.
+- Major allele frequency changes over 50 years were observed at loci including *gdv1* (sexual conversion regulation), *Pfsa1*, and *Pfsa3* (associated with sickle-cell trait infection).
+- Historic infections showed high genomic complexity and were largely genetically unrelated.
 
 ## Project Structure
 
  ```
-
-├── data/                           # Processed 
-__ genomic data (VCFs, filtered SNPs)
-metadata
-processed
-raw
+├── data/ genomic data (VCFs, filtered SNPs)
+    └── metadata
+    └── processed
+    └── raw
 ├── scripts/                        # Analysis scripts (R, shell)
 ├── results/                        # Output figures, tables, and statistical summaries
-Figures
+    └── Figures
+    └── Tables
 ├── docs/                           # Supplementary documentation and methods details
 └── README.md                       # This file
 ```
@@ -105,7 +91,7 @@ If you use this data or code, please cite the corresponding publication:
 ## Contact
 For questions regarding data or analysis, please contact:
 - **Principal Investigator:** [Alfred Amambua-Ngwa, MRC Unit The Gambia at London School of Hygiene and Tropical Medicine, Banjul, The Gambia, alfred.ngwa@lshtm.ac.uk]
-- - **Principal Investigator:** [David J. Conway, Department of Infection Biology, London School of Hygiene and Tropical Medicine, London, UK, david.conway@lshtm.ac.uk]
+- **Principal Investigator:** [David J. Conway, Department of Infection Biology, London School of Hygiene and Tropical Medicine, London, UK, david.conway@lshtm.ac.uk]
 - **Bioinformatics Lead:** [Mouhamadou Fadel Diop, MRC Unit The Gambia at London School of Hygiene and Tropical Medicine, Banjul, The Gambia, mdiop@mrc.gm]
 
 ## License
