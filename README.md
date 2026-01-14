@@ -1,7 +1,7 @@
 # Major features of parasite adaptation revealed by genomes of Plasmodium falciparum population samples archived for over 50 years
 
 ## Overview
-This repository contains the data processing and analysis workflows for a genomic study of \*Plasmodium falciparum\* malaria parasites from archived placental blood samples collected in The Gambia between 1966 and 1971. The project investigates the evolutionary history of the parasite prior to widespread antimalarial drug pressure, identifying signatures of selection and temporal genomic changes over a ~50-year period.
+This repository contains the data processing and analysis workflows for a genomic study of Plasmodium *falciparum* malaria parasites from archived placental blood samples collected in The Gambia between 1966 and 1971. The project investigates the evolutionary history of the parasite prior to widespread antimalarial drug pressure, identifying signatures of selection and temporal genomic changes over a ~50-year period.
 
 ## **Key Findings:**
 - No drug resistance alleles were detected in the historic (1966–1971) parasite population.
@@ -79,14 +79,14 @@ Installation instructions for specific packages are provided within the individu
 All analysis steps are documented in the `scripts/` directory with commented code. Key parameters and filtering thresholds are detailed in the Methods section above and within the scripts. Sample sizes and SNP sets for each analysis are explicitly noted in the relevant script headers.
 
 ## Citation
-If you use this data or code, please cite the corresponding publication:
+If you use this data or code, please cite the corresponding publication:  
 Amambua-Ngwa, A., Diop, M.F., Drakeley, C.J. et al. Major features of parasite adaptation revealed by genomes of Plasmodium falciparum population samples archived for over 50 years. Commun Biol (2026). https://doi.org/10.1038/s42003-025-09460-3
 
 ## Acknowledgements
 - Sample collection and archiving: MRC Unit @ London School of Hygiene and Tropical Medicine, The Gambia.
 - Sequencing and data processing: Wellcome Sanger Institute (MalariaGEN pipeline).
 
-## - Funding:  
+## Funding:  
 This research was supported by a European and Developing Countries Clinical Trials Partnership (EDCTP) Senior Fellowship Plus award (TMA2019SFP-2843-EGSAT) and a Wellcome Sanger Institute Senior International Fellowship award (S4739-IF-A.A.-N.) to A.A.-N., and an MRC Project Grant (MR/S009760/1) to D.J.C.
 
 ## Contact
