@@ -70,7 +70,7 @@ This repository contains the data processing and analysis workflows for a genomi
 Key tools and packages used in this analysis:
 - **Variant Calling & Filtering:** MalariaGEN Pf7 pipeline, VCFtools
 - **Population Genetics:** `plink`, `moimix`, `Rehh`, `BetaScan`, `mmod`
-- **Visualization:** `ggplot2`, `Pheatmap`, `qqman`, `locuszoom`
+- **Visualization:** `tidyverse`, `ggplot2`, `Pheatmap`, `qqman`, `locuszoom`
 - **General Analysis:** R (≥4.0), Python (≥3.8)
 
 Installation instructions for specific packages are provided within the individual scripts.
@@ -80,20 +80,20 @@ All analysis steps are documented in the `scripts/` directory with commented cod
 
 ## Citation
 If you use this data or code, please cite the corresponding publication:
-[Publication details will be added upon acceptance]
+Amambua-Ngwa, A., Diop, M.F., Drakeley, C.J. et al. Major features of parasite adaptation revealed by genomes of Plasmodium falciparum population samples archived for over 50 years. Commun Biol (2026). https://doi.org/10.1038/s42003-025-09460-3
 
 ## Acknowledgements
-- Sample collection and archiving: MRC Unit, The Gambia.
+- Sample collection and archiving: MRC Unit @ London School of Hygiene and Tropical Medicine, The Gambia.
 - Sequencing and data processing: Wellcome Sanger Institute (MalariaGEN pipeline).
 
-## - Funding: [Details to be added].
+## - Funding:  
+This research was supported by a European and Developing Countries Clinical Trials Partnership (EDCTP) Senior Fellowship Plus award (TMA2019SFP-2843-EGSAT) and a Wellcome Sanger Institute Senior International Fellowship award (S4739-IF-A.A.-N.) to A.A.-N., and an MRC Project Grant (MR/S009760/1) to D.J.C.
 
 ## Contact
 For questions regarding data or analysis, please contact:
 - **Principal Investigator:** [Alfred Amambua-Ngwa, MRC Unit The Gambia at London School of Hygiene and Tropical Medicine, Banjul, The Gambia, alfred.ngwa@lshtm.ac.uk]
 - **Principal Investigator:** [David J. Conway, Department of Infection Biology, London School of Hygiene and Tropical Medicine, London, UK, david.conway@lshtm.ac.uk]
-- **Bioinformatics Lead:** [Mouhamadou Fadel Diop, MRC Unit The Gambia at London School of Hygiene and Tropical Medicine, Banjul, The Gambia, mdiop@mrc.gm]
+- **Bioinformatics Lead:** [Mouhamadou Fadel Diop, MRC Unit The Gambia at London School of Hygiene and Tropical Medicine, Banjul, The Gambia, mdiop@mrc.gm / diop.mfadel@gmail.com]
 
 ## License
 This project is licensed under the [MIT License] – see the LICENSE file for details.
-
