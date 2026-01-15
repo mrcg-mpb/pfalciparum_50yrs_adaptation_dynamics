@@ -1,0 +1,15 @@
+.RData
+.DS_Store
+
+source_data/*.xlsx
+!README.md
+
+results/tables
+submission
+
+*temp*
+*.docx*
+*.Rproj.user*
+*.Rhistory*
+scripts/Rplots.pdf
+.Rproj.user
