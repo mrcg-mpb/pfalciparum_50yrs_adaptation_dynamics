@@ -1,0 +1,204 @@
+---
+title: "Historic population samples reveal ongoing adaptations of malaria parasites to their human hosts"
+author: "Fadel"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# 📂 Suggested Folder Structure
+
+```
+project_root/
+│
+├── data/                      # Raw & intermediate data
+│   ├── raw/                   # Unprocessed input VCFs & metadata
+│   ├── processed/             # Filtered/cleaned datasets
+│   ├── allele_freq/           # Allele frequency outputs
+│   └── references/            # Reference files (positions, samples, gene lists)
+│
+├── scripts/                   # Standalone R and bash scripts
+│   ├── 01_filter_missing_genotypes.R
+│   ├── 02_estimate_Fst.R
+│   ├── utils_functions.R      # Reusable R functions
+│   └── bash/                  # Bash helper scripts
+│
+├── results/                   # Outputs
+│   ├── figures/               # Plots (PDF, PNG)
+│   ├── tables/                # Processed tables, summary stats
+│   └── reports/               # Final results
+│
+├── docs/                      # Documentation
+│   └── project_notebook.Rmd   # Main RMarkdown analysis file
+│
+└── scripts/codes/             # External scripts (e.g., perl, vcflib)
+```
+
+
+# 1. Project Overview
+
+This study compares drug resistance markers from historic *Plasmodium falciparum* samples (1966–72) and recent samples (2015) collected in The Gambia.  
+
+- Historic samples: `1136-PF-GM-NGWA_genotyped`
+- Recent samples: `Pf_1162_GM` and `Pf_1182_GM`
+
+**Objectives:**
+1. Neutrality tests: Tajima’s D, iHS, BetaScores  
+2. Population differentiation: wcFST, Gst, Jost’s D  
+3. Allele frequency trajectories across time points (1966, 2001, 2008, 2015)  
+
+---
+
+# 2. Setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(data.table)
+library(VariantAnnotation)
+````
+
+Define paths:
+
+```{r paths}
+raw_dir      <- "data/raw"
+proc_dir     <- "data/processed"
+freq_dir     <- "data/allele_freq"
+ref_dir      <- "data/references"
+results_dir  <- "results"
+
+scripts_dir  <- "scripts"
+```
+
+---
+
+# 3. Data Preparation
+
+## 3.1 Historic Samples (1966–72)
+
+```{bash}
+VCF="data/raw/1136-PF-GM-NGWA_genotyped.vcf.gz"
+bcftools query -f '%CHROM\t%POS\n' $VCF > $ref_dir/chromosomes.txt
+```
+
+Filter non-core chromosomes and low-quality variants:
+
+```{r}
+read_delim(file.path(ref_dir, "chromosomes.txt"), col_names = FALSE) %>%
+  filter(X1 == "Pf3D7_API_v3") %>%
+  write.table(file.path(ref_dir, "chromosomestoRemove.txt"), 
+              col.names = FALSE, row.names = FALSE, quote = FALSE)
+```
+
+```{bash}
+QUAL=10
+MIN_DEPTH=5
+OUT="data/processed/gam1966_72_biallelic"
+
+vcftools --gzvcf $VCF \
+  --exclude-positions $ref_dir/chromosomestoRemove.txt \
+  --minQ $QUAL --min-meanDP $MIN_DEPTH --minDP $MIN_DEPTH \
+  --max-alleles 2 --min-alleles 2 \
+  --recode --recode-INFO-all --out $OUT
+
+mv $OUT.recode.vcf $OUT.vcf
+```
+
+Clean missing genotypes:
+
+```{r}
+source(file.path(scripts_dir, "01_filter_missing_genotypes.R"))
+haps1966 <- filter_missing(file.path(proc_dir, "gam1966_72_biallelic.vcf"))
+```
+
+---
+
+## 3.2 Recent Samples (2015)
+
+Merge and filter:
+
+```{bash}
+bcftools merge -Oz -o data/processed/Pf_1162_1182_GM.vcf.gz \
+  data/raw/1162-PF-GM-NGWA_genotyped.vcf.gz \
+  data/raw/1182-PF-GM-DALESSANDRO-SM_genotyped.vcf.gz
+
+tabix -f data/processed/Pf_1162_1182_GM.vcf.gz
+```
+
+---
+
+# 4. Neutrality Tests
+
+* Tajima’s D
+* iHS
+* BetaScores
+
+(See scripts in `scripts/neutrality/` for implementation details.)
+
+---
+
+# 5. Population Differentiation
+
+```{r}
+source(file.path(scripts_dir, "02_estimate_Fst.R"))
+fst_results <- estimate_Fst(vcf_1966, vcf_2015)
+write_tsv(fst_results, file.path(results_dir, "tables/Fst_summary.tsv"))
+```
+
+---
+
+# 6. Allele Frequencies Across Time
+
+Prepare allele frequency files:
+
+```{bash}
+vcftools --vcf data/processed/gam1966_72.vcf \
+  --keep $ref_dir/samples1966.txt \
+  --positions $freq_dir/nsSNPspositions.txt \
+  --freq2 --out $freq_dir/pop1966
+```
+
+Repeat for 2001, 2008, 2015 datasets.
+
+---
+
+# 7. Visualization
+
+## 7.1 Allele Frequency Trajectories
+
+```{r}
+freq_combined <- read_tsv(file.path(freq_dir, "allele_frequencies_overTime.tsv"))
+ggplot(freq_combined, aes(x = time, y = ref, group = interaction(chrom,pos), color = chrom)) +
+  geom_line() + geom_point() +
+  labs(title = "Trajectory of Allele Frequencies", x = "Year", y = "Allele Frequency") +
+  theme_minimal()
+```
+
+## 7.2 Neutrality & Selection Scans
+
+* Manhattan plots for iHS, BetaScores
+* Highlight drug resistance loci (PfCRT, DHFR, DHPS, PfAAT1)
+
+---
+
+# 8. Documentation
+
+* All raw input files are in `data/raw/`
+* Each intermediate VCF is stored in `data/processed/`
+* Scripts for filtering & analysis are in `scripts/`
+* Final results, plots, and tables are in `results/`
+* This RMarkdown serves as the **master notebook** to reproduce the study.
+
+```
+
+---
+
+This way:  
+- The **RMarkdown** acts as the master narrative of your analysis.  
+- **Reusable scripts** handle tasks like filtering, Fst estimation, etc.  
+- **Folder structure** keeps raw, processed, and results data separated.  
+- Each step is fully documented and reproducible.  
+
+---
+
+👉 Do you want me to **populate the standalone scripts** (e.g., `01_filter_missing_genotypes.R` and `02_estimate_Fst.R`) with full working functions so you can directly drop them into your project, or just leave placeholders?
+```
